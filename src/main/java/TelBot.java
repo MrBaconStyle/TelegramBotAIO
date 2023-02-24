@@ -75,8 +75,6 @@ public class TelBot extends TelegramLongPollingBot {
                 }
 
                 String url = listStorage.getUrlList().get(0);
-                //System.out.println(url);
-                //System.out.println(command);
                 listStorage.removeUrl();
 
                 scrape(url, command);
@@ -142,19 +140,19 @@ public class TelBot extends TelegramLongPollingBot {
         while (true) {
 
             driver.get(url + pageNum + "?page=" + pageNum);
-
             List<WebElement> bookListing = driver.findElements(By.className("AdItem_adHolder__NoNLJ"));
 
             for (WebElement listing : bookListing) {
 
                 String title = listing.findElement(By.className("AdItem_name__80tI5")).getText();
-                String price = listing.findElement(By.className("AdItem_price__jUgxi")).getText();
 
                 if (title.toLowerCase().contains(book.toLowerCase())) {
                     //System.out.println("Knjiga --> " + title + " --> " + price + " --> str " + pageNum);
                     //writer.write("Knjiga --> " + title + " --> " + price + " --> str " + pageNum + "\n"); //PISE TXT FAJL
+                    String price = listing.findElement(By.className("AdItem_price__jUgxi")).getText();
+                    String link = listing.findElement(By.className("Link_link__J4Qd8")).getAttribute("href");
+                    listStorage.addBook(title, price, pageNum, link);
 
-                    listStorage.addBook(title, price, pageNum);
                 }
             }
 
@@ -166,8 +164,8 @@ public class TelBot extends TelegramLongPollingBot {
                 //System.out.println(listStorage.getBookList()); //ISPISUJE LISTU KNJIGA
                 driver.quit();
                 break;
+
             }
         }
-
     }
 }

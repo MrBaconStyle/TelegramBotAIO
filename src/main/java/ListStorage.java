@@ -17,8 +17,8 @@ public class ListStorage {
         urlList.remove(0);
     }
 
-    public void addBook(String book, String price, int page) {
-        bookList.add("Knjiga --> " + book + " --> " + price + " --> str " + page);
+    public void addBook(String book, String price, int page, String link) {
+        bookList.add("Knjiga --> " + book + " --> " + price + " --> str " + page + "\n" + link);
     }
 
     public ArrayList<String> getBookList() {
